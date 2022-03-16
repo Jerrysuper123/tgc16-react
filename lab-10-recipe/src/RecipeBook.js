@@ -1,11 +1,20 @@
 import React from "react";
 import Listing from "./Listing";
 import AddNew from "./AddNew";
+import axios from "axios";
 
 export default class RecipeBook extends React.Component{
     state={
         active: "recipe",
         data:[]
+    }
+
+    BASE_API_URL="https://8888-jerrysuper123-dwadrecipe-mmoktr0bmn8.ws-us34.gitpod.io/";
+    async componentDidMount(){
+        let response = await axios.get(this.BASE_API_URL+"recipes");
+        this.setState({
+            data: response.data
+        })
     }
 
     renderPage(){

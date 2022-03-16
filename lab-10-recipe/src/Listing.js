@@ -18,7 +18,6 @@ export default function Listing(props) {
                                     <h5>ingredient</h5>
                                     <ul>
                                         {
-                                    
                                             r.ingredient.map(
                                                 (ingredient,index)=>{
                                                    return <li key={index}>{ingredient}</li>

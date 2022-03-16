@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 export default class AddNew extends React.Component {
 
@@ -7,6 +8,8 @@ export default class AddNew extends React.Component {
         newIngredients: [],
         newIngredientAdded: ""
     }
+
+    BASE_API_URL = "https://8888-jerrysuper123-dwadrecipe-mmoktr0bmn8.ws-us34.gitpod.io/";
 
     updateFormField = (e) => {
         this.setState({
@@ -25,21 +28,59 @@ export default class AddNew extends React.Component {
         })
     }
 
+
+    // addNewIngredient = () => {
+    //     this.setState({
+    //         newIngredients: [...this.state.newIngredients, this.state.newIngredientBeingAdded],
+    //         newIngredientBeingAdded: ''
+    //     })
+    // }
+
+    // addNewRecipe = async () => {
+ 
+    //     let response = await axios.post(this.BASE_API_URL + 'recipes', {
+    //         'title': this.state.newRecipeTitle,
+    //         'ingredients': this.state.newIngredients
+    //     })
+
+    //     // to access the props, use this.props
+    //     this.props.processAddNewRecipe(response.data[0]); 
+    // }
+
     addNewIngredient = () => {
+        //use mongodb to generate id instead of taking id from api, app will load faster
+        //below will post to db and get object id there, it is slower
         this.setState({
             newIngredients: [...this.state.newIngredients, this.state.newIngredientAdded],
-            newIngredientAdded: ""
+            newIngredientAdded:""
         })
     }
 
-    addNewRecipe = () => {
-        this.props.processAddNewRecipe({
-            "_id": Math.floor(Math.random() * 11000),
+    addNewRecipe = async () => {
+        // this.props.processAddNewRecipe({
+        //     "_id": Math.floor(Math.random() * 11000),
+        //     "title": this.state.newRecipeTitle,
+        //     "ingredient": this.state.newIngredients
+        // })
+
+        let response = await axios.post(this.BASE_API_URL + "recipes", {
             "title": this.state.newRecipeTitle,
             "ingredient": this.state.newIngredients
         })
-    }
 
+        this.props.processAddNewRecipe(response.data[0]);
+    }
+    
+    // addNewRecipe = async () => {
+ 
+    //     let response = await axios.post(this.BASE_API_URL + 'recipes', {
+    //         'title': this.state.newRecipeTitle,
+    //         'ingredients': this.state.newIngredients
+    //     })
+
+    //     // to access the props, use this.props
+    //     this.props.processAddNewRecipe(response.data[0]); 
+    // }
     render() {
         return (
             <React.Fragment>
